@@ -141,16 +141,17 @@ func GetImageTagValues(tagType schema.BuildFormat) (branch, version string, err 
 func getDockerBuildCommand(build dockerBuild) (string, []string) {
 	flagSlice := buildFlagSlice(build.NoCache, build.Squash, build.HTTPProxy, build.HTTPSProxy, build.BuildArgMap, build.BuildOptPackages, build.BuildLabelMap)
 	args := []string{"build"}
-	args = append(args, flagSlice...)
 	fmt.Println("********************************************")
 	dockerRemoteHost := os.Getenv("docker_remote_host")
 	fmt.Println(dockerRemoteHost)
 	fmt.Println("********************************************")
 	if dockerRemoteHost != "" {
-		args = append(args, "-H", dockerRemoteHost)
+		args = []string{"-H", dockerRemoteHost, "build"}
 	}
+	args = append(args, flagSlice...)
 	args = append(args, "-t", build.Image, ".")
 	command := "docker"
+	fmt.Println(args)
 	return command, args
 }
 
