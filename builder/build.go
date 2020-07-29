@@ -142,7 +142,10 @@ func getDockerBuildCommand(build dockerBuild) (string, []string) {
 	flagSlice := buildFlagSlice(build.NoCache, build.Squash, build.HTTPProxy, build.HTTPSProxy, build.BuildArgMap, build.BuildOptPackages, build.BuildLabelMap)
 	args := []string{"build"}
 	args = append(args, flagSlice...)
+	fmt.Println("********************************************")
 	dockerRemoteHost := os.Getenv("docker_remote_host")
+	fmt.Println(dockerRemoteHost)
+	fmt.Println("********************************************")
 	if dockerRemoteHost != "" {
 		args = append(args, "-H", dockerRemoteHost)
 	}
